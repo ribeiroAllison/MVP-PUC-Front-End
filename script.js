@@ -34,7 +34,8 @@ async function run() {
         const statusData = document.createElement('td');
         const removeChore = document.createElement('td');
         const removeChoreButton = document.createElement('button');
-        removeChoreButton.setAttribute('id', chore['id']);
+        removeChoreButton.setAttribute('value', chore['id']);
+        removeChoreButton.addEventListener('click', deleteChore)
         removeChoreButton.innerHTML = 'Remover Tarefa';
         removeChore.append(removeChoreButton);
         statusData.innerHTML = chore['finished'] === true ? 'resolvido' : 'pendente';
@@ -79,3 +80,25 @@ function postNewChore(){
 
 const button = document.getElementById('submitButton');
 button.addEventListener('click', postNewChore)
+
+
+//Delete 
+
+function deleteChore(event) {
+    const choreId = event.target.value
+    console.log(choreId)
+    $.ajax({
+        type: 'DELETE',
+        url: baseUrl + '/delete_chore/' + choreId,  // Replace with your API route URL
+        success: function(response) {
+        // Handle success response
+        console.log(response);
+        },
+        error: function(error) {
+        // Handle error response
+        console.error(error);
+        }
+        
+    });
+    location.reload()
+}
