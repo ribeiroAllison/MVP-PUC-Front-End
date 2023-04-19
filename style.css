@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;400;700&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif;;
+}
+header{
+    width: 100%;
+    text-align: center;
+    border: 1px solid gray;
+    margin-bottom: 20px;
+}
+
+body{
+    height: 100lvh;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form-ctr{
+    margin-bottom: 20px;
+}
+
+#newChore{
+    width: 400px;
+    border-radius: 20px;
+    border-style: none;
+    border: 1px solid black;
+    height: 25px;
+
+}
+
+table{
+border-color: gray;
+border-collapse: collapse;
+}
+
+table td{
+    padding: 5px;
+    border: 1px solid gray;
+    border-color: gray;
+    
+}
+
+table th{
+    border: 1px solid black;
+}
+
+table th, td{
+    min-width: 100px;
+}
+
+
+button, #submitButton{
+    border-style: none;
+    background-color: rgb(98, 98, 245);
+    border: 1px solid black;
+    color:antiquewhite;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+button:hover, #submitButton:hover{
+    background-color: rgba(98, 98, 245, 0.534);
+    cursor: pointer;
+}

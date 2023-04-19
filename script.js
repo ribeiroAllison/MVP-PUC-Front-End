@@ -34,17 +34,27 @@ async function run() {
         const statusData = document.createElement('td');
         const removeChore = document.createElement('td');
         const removeChoreButton = document.createElement('button');
+        const updateChore = document.createElement('td');
+
         removeChoreButton.setAttribute('value', chore['id']);
         removeChoreButton.addEventListener('click', deleteChore)
         removeChoreButton.innerHTML = 'Remover Tarefa';
         removeChore.append(removeChoreButton);
+        
+        const updateChoreButton = document.createElement('button');
+        updateChoreButton.setAttribute('value', chore['id']);
+        updateChoreButton.addEventListener('click', updateChoreStatus)
+        updateChoreButton.innerHTML = 'Atualizar Status';
+        updateChore.append(updateChoreButton);
         statusData.innerHTML = chore['finished'] === true ? 'resolvido' : 'pendente';
+        statusData.setAttribute('id', `status${chore['id']}`)
         idData.innerHTML = chore['id'];
         choreData.innerHTML = chore['chores']
         newRow.append(idData);
         newRow.append(choreData);
         newRow.append(statusData);
         newRow.append(removeChore);
+        newRow.append(updateChore);
         table.append(newRow);
         
     }
@@ -70,12 +80,14 @@ function postNewChore(){
         success: function(response){
             console.log(response)
             
+            
         },
         error: function(response){
             console.log(response)
             
         }
     });
+    location.reload()
 }
 
 const button = document.getElementById('submitButton');
@@ -102,3 +114,35 @@ function deleteChore(event) {
     });
     location.reload()
 }
+
+
+//update Chore
+
+function updateChoreStatus(event){
+    const id = event.target.value
+    const status = document.getElementById(`status${id}`).innerHTML === 'pendente' ? false : true;
+    console.log(status)
+    
+    let data = {
+        id: id,
+        finished: status
+    };
+
+    $.ajax({
+        type:'POST',
+        url: baseUrl+'/update_chore',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response){
+            console.log(response)
+            
+            
+        },
+        error: function(response){
+            console.log(response)
+            
+        }
+    });
+    location.reload()
+}
+
