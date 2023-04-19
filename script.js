@@ -1,3 +1,6 @@
+
+// Get Script
+
 const baseUrl = 'http://127.0.0.1:5000';
 
 
@@ -41,3 +44,32 @@ async function run() {
 }
 
 run()
+
+
+
+//Post Script
+function postNewChore(){
+    
+    let data = {
+        chore: document.getElementById('newChore').value,
+        finished: false
+    };
+
+    $.ajax({
+        type:'POST',
+        url: baseUrl+'/add_chore',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response){
+            console.log(response)
+            
+        },
+        error: function(response){
+            console.log(response)
+            console.log(data)
+        }
+    });
+}
+
+const button = document.getElementById('submitButton');
+button.addEventListener('click', postNewChore)
