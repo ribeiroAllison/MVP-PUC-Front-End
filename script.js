@@ -1,5 +1,4 @@
-
-// Get Script
+// Get  and Build Script
 
 const baseUrl = 'http://127.0.0.1:5000';
 
@@ -29,40 +28,44 @@ async function run() {
     
     for(chore of result){
         const newRow = document.createElement('tr');
-        const idData = document.createElement('td');
-        const choreData = document.createElement('td');
-        const statusData = document.createElement('td');
-        const removeChore = document.createElement('td');
-        const removeChoreButton = document.createElement('button');
-        const updateChore = document.createElement('td');
 
-        removeChoreButton.setAttribute('value', chore['id']);
-        removeChoreButton.addEventListener('click', deleteChore)
-        removeChoreButton.innerHTML = 'Remover Tarefa';
-        removeChore.append(removeChoreButton);
-        
-        const updateChoreButton = document.createElement('button');
-        updateChoreButton.setAttribute('value', chore['id']);
-        updateChoreButton.addEventListener('click', updateChoreStatus)
-        updateChoreButton.innerHTML = 'Atualizar Status';
-        updateChore.append(updateChoreButton);
+        const idData = document.createElement('td');
+        idData.innerHTML = chore['id'];
+
+        const choreData = document.createElement('td');
+        choreData.innerHTML = chore['chores']
+
+        const statusData = document.createElement('td');
         statusData.innerHTML = chore['finished'] === true ? 'resolvido' : 'pendente';
         statusData.setAttribute('id', `status${chore['id']}`)
-        idData.innerHTML = chore['id'];
-        choreData.innerHTML = chore['chores']
+
+        const removeChore = document.createElement('td');
+        const removeChoreButton = document.createElement('button');
+        removeChoreButton.innerHTML = 'Remover Tarefa';
+        removeChoreButton.setAttribute('value', chore['id']);
+        removeChoreButton.addEventListener('click', deleteChore)
+        removeChore.append(removeChoreButton);
+
+        const updateChore = document.createElement('td');
+        const updateChoreButton = document.createElement('button');
+        updateChoreButton.innerHTML = 'Atualizar Status';
+        updateChoreButton.setAttribute('value', chore['id']);
+        updateChoreButton.addEventListener('click', updateChoreStatus)
+        updateChore.append(updateChoreButton);
+        
+
         newRow.append(idData);
         newRow.append(choreData);
         newRow.append(statusData);
         newRow.append(removeChore);
         newRow.append(updateChore);
+
         table.append(newRow);
         
     }
 }
 
 run()
-
-
 
 //Post Script
 function postNewChore(){
@@ -98,7 +101,7 @@ button.addEventListener('click', postNewChore)
 
 function deleteChore(event) {
     const choreId = event.target.value
-    console.log(choreId)
+    
     $.ajax({
         type: 'DELETE',
         url: baseUrl + '/delete_chore/' + choreId,  // Replace with your API route URL
@@ -145,4 +148,7 @@ function updateChoreStatus(event){
     });
     location.reload()
 }
+
+
+
 
