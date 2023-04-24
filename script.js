@@ -17,9 +17,9 @@ async function getList(){
             
         }
     } catch(error){
-        console.log(error)
+        console.log(error);
     }
-}
+};
 
 
 async function run() {
@@ -33,17 +33,17 @@ async function run() {
         idData.innerHTML = chore['id'];
 
         const choreData = document.createElement('td');
-        choreData.innerHTML = chore['chores']
+        choreData.innerHTML = chore['chores'];
 
         const statusData = document.createElement('td');
         statusData.innerHTML = chore['finished'] === true ? 'resolvido' : 'pendente';
-        statusData.setAttribute('id', `status${chore['id']}`)
+        statusData.setAttribute('id', `status${chore['id']}`);
 
         const removeChore = document.createElement('td');
         const removeChoreButton = document.createElement('button');
         removeChoreButton.innerHTML = 'Remover Tarefa';
         removeChoreButton.setAttribute('value', chore['id']);
-        removeChoreButton.addEventListener('click', deleteChore)
+        removeChoreButton.addEventListener('click', deleteChore);
         removeChore.append(removeChoreButton);
 
         const updateChore = document.createElement('td');
@@ -94,7 +94,7 @@ function postNewChore(){
 }
 
 const button = document.getElementById('submitButton');
-button.addEventListener('click', postNewChore)
+button.addEventListener('click', postNewChore);
 
 
 //Delete 
@@ -115,7 +115,7 @@ function deleteChore(event) {
         }
         
     });
-    location.reload()
+    location.reload();
 }
 
 
@@ -146,7 +146,7 @@ function updateChoreStatus(event){
             
         }
     });
-    location.reload()
+    location.reload();
 }
 
 
