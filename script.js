@@ -66,31 +66,24 @@ async function run() {
 }
 
 run()
-
+    //     chore: document.getElementById('newChore').value,
 //Post Script
 function postNewChore(){
-    
-    let data = {
-        chore: document.getElementById('newChore').value,
-        finished: false
-    };
+    const formData = new FormData();
+    const chore = document.getElementById('newChore').value
+    formData.append('chore', chore);
+    formData.append('finished', false);
 
-    $.ajax({
-        type:'POST',
-        url: baseUrl+'/add_chore',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response){
-            console.log(response)
-            
-            
-        },
-        error: function(response){
-            console.log(response)
-            
-        }
-    });
-    location.reload()
+    let url = 'http://127.0.0.1:5000/add_chore';
+    fetch(url, {
+        method: 'post',
+        body: formData
+    })
+        .then((response) => response.json())
+        .catch((error) => {
+        console.error('Error:', error);
+});
+    location.reload();
 }
 
 const button = document.getElementById('submitButton');
