@@ -17,9 +17,9 @@ async function getList(){
             
         }
     } catch(error){
-        console.log(error)
+        console.log(error);
     }
-}
+};
 
 
 async function run() {
@@ -33,17 +33,17 @@ async function run() {
         idData.innerHTML = chore['id'];
 
         const choreData = document.createElement('td');
-        choreData.innerHTML = chore['chores']
+        choreData.innerHTML = chore['chores'];
 
         const statusData = document.createElement('td');
         statusData.innerHTML = chore['finished'] === true ? 'resolvido' : 'pendente';
-        statusData.setAttribute('id', `status${chore['id']}`)
+        statusData.setAttribute('id', `status${chore['id']}`);
 
         const removeChore = document.createElement('td');
         const removeChoreButton = document.createElement('button');
         removeChoreButton.innerHTML = 'Remover Tarefa';
         removeChoreButton.setAttribute('value', chore['id']);
-        removeChoreButton.addEventListener('click', deleteChore)
+        removeChoreButton.addEventListener('click', deleteChore);
         removeChore.append(removeChoreButton);
 
         const updateChore = document.createElement('td');
@@ -66,89 +66,67 @@ async function run() {
 }
 
 run()
-
+    //     chore: document.getElementById('newChore').value,
 //Post Script
 function postNewChore(){
-    
-    let data = {
-        chore: document.getElementById('newChore').value,
-        finished: false
-    };
+    const formData = new FormData();
+    const chore = document.getElementById('newChore').value
+    formData.append('chore', chore);
+    formData.append('finished', false);
+    console.log(formData)
 
-    $.ajax({
-        type:'POST',
-        url: baseUrl+'/add_chore',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response){
-            console.log(response)
-            
-            
-        },
-        error: function(response){
-            console.log(response)
-            
-        }
-    });
-    location.reload()
+    let url = `${baseUrl}/add_chore`;
+    fetch(url, {
+        method: 'post',
+        body: formData
+    })
+        .then((response) => response.json())
+        .catch((error) => {
+        console.error('Error:', error);
+});
+    location.reload();
 }
 
 const button = document.getElementById('submitButton');
-button.addEventListener('click', postNewChore)
+button.addEventListener('click', postNewChore);
 
 
 //Delete 
 
 function deleteChore(event) {
     const choreId = event.target.value
-    
-    $.ajax({
-        type: 'DELETE',
-        url: baseUrl + '/delete_chore/' + choreId,  // Replace with your API route URL
-        success: function(response) {
-        // Handle success response
-        console.log(response);
-        },
-        error: function(error) {
-        // Handle error response
-        console.error(error);
-        }
-        
-    });
+    let url = baseUrl + '/delete_chore?id=' + choreId;
+    fetch(url, {
+        method: 'delete'
+    })
+        .then((response) => response.json())
+        .catch((error) => {
+        console.error('Error:', error);
+        });
     location.reload()
+
 }
 
-
-//update Chore
 
 function updateChoreStatus(event){
-    const id = event.target.value
+    const formData = new FormData();
+    const id = event.target.value;
     const status = document.getElementById(`status${id}`).innerHTML === 'pendente' ? false : true;
-    console.log(status)
+    formData.append('id', id);
+    formData.append('finished', status);
     
-    let data = {
-        id: id,
-        finished: status
-    };
 
-    $.ajax({
-        type:'POST',
-        url: baseUrl+'/update_chore',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response){
-            console.log(response)
-            
-            
-        },
-        error: function(response){
-            console.log(response)
-            
-        }
-    });
-    location.reload()
+    let url = `${baseUrl}/update_chore`;
+    fetch(url, {
+        method: 'post',
+        body: formData
+    })
+        .then((response) => response.json())
+        .catch((error) => {
+        console.error('Error:', error);
+});
+    location.reload();
 }
-
 
 
 
