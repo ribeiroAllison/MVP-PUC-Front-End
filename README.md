@@ -1,5 +1,5 @@
 # Screenshot:
-<img src="./resources/screenshot.jpg" alt='screenshot da página'/>
+![alt screenshot of the program](/resources/screenshot.jpg "Program screenshot")
 
 # O que é este projeto?
 
